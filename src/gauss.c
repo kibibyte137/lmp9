@@ -12,6 +12,7 @@ int eliminate(Matrix *mat, Matrix *b) {
 	int cols = mat->c;
 
 	for (int k = 0; k < rows && k < cols; ++k) {
+<<<<<<< HEAD
 		/* Znalezienie wiersza z najwiekszym elementem w kolumnie k (pivoting) */
 		int max_row = k;
 		for (int i = k + 1; i < rows; ++i) {
@@ -32,7 +33,10 @@ int eliminate(Matrix *mat, Matrix *b) {
 			b->data[max_row][0] = temp_b;
 		}
 
-		/* Sprawdzenie, czy element diagonalny jest rowny 0 */
+		/* Sprawdzanie, czy element diagonalny jest rowny 0 */
+=======
+		/* Sprawdzanie, czy element diagonalny jest rowny 0 */
+>>>>>>> diag_elem1
 		if (mat->data[k][k] == 0.0) {
 			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
 			return 1;
@@ -52,5 +56,17 @@ int eliminate(Matrix *mat, Matrix *b) {
 		}
 	}
 
+<<<<<<< HEAD
 	return 0;
+=======
+	/* Sprawdzenie ostatnich elementow diagonalnych */
+	for (int k = 0; k < rows && k < cols; ++k) {
+		if (mat->data[k][k] == 0.0) {
+			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
+			return 1; /* Macierz osobliwa */
+		}
+	}
+
+	return 0; /* Eliminacja zakonczonaa sukcesem */
+>>>>>>> diag_elem1
 }
