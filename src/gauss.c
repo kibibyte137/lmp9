@@ -1,7 +1,7 @@
 #include "gauss.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 /*
  * Zwraca 0 - eliminacja zakonczona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
