@@ -11,7 +11,7 @@ int eliminate(Matrix *mat, Matrix *b) {
 	int cols = mat->c; /* Liczba kolumn macierzy */
 
 	for (int k = 0; k < rows && k < cols; ++k) {
-		/* Sprawdzenie, czy element diagonalny jest rowny 0 */
+		/* Sprawdzanie, czy element diagonalny jest rowny 0 */
 		if (mat->data[k][k] == 0.0) {
 			fprintf(stderr, "Macierz osobliwa lub brak mozliwosci eliminacji w wierszu %d.\n", k);
 			return 1; /* Macierz osobliwa */
