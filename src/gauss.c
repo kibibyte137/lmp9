@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 /*
- * Zwraca 0 - eliminacja zakonczona sukcesem
+ * Zwraca 0 - eliminacja zakończona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
  */
 int eliminate(Matrix *mat, Matrix *b) {
@@ -12,8 +13,7 @@ int eliminate(Matrix *mat, Matrix *b) {
 	int cols = mat->c;
 
 	for (int k = 0; k < rows && k < cols; ++k) {
-<<<<<<< HEAD
-		/* Znalezienie wiersza z najwiekszym elementem w kolumnie k (pivoting) */
+		/* Znalezienie wiersza z największym elementem w kolumnie k (pivoting) */
 		int max_row = k;
 		for (int i = k + 1; i < rows; ++i) {
 			if (fabs(mat->data[i][k]) > fabs(mat->data[max_row][k])) {
@@ -27,22 +27,19 @@ int eliminate(Matrix *mat, Matrix *b) {
 			mat->data[k] = mat->data[max_row];
 			mat->data[max_row] = temp_row;
 
-			/* Zamiana odpowiednich wartosci w wektorze b */
+			/* Zamiana odpowiednich wartości w wektorze b */
 			double temp_b = b->data[k][0];
 			b->data[k][0] = b->data[max_row][0];
 			b->data[max_row][0] = temp_b;
 		}
 
-		/* Sprawdzanie, czy element diagonalny jest rowny 0 */
-=======
-		/* Sprawdzanie, czy element diagonalny jest rowny 0 */
->>>>>>> diag_elem1
+		/* Sprawdzenie, czy element diagonalny jest równy 0 */
 		if (mat->data[k][k] == 0.0) {
 			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
 			return 1;
 		}
 
-		/* Eliminacja wierszy ponizej wiersza k */
+		/* Eliminacja wierszy poniżej wiersza k */
 		for (int i = k + 1; i < rows; ++i) {
 			double factor = mat->data[i][k] / mat->data[k][k];
 
@@ -56,17 +53,5 @@ int eliminate(Matrix *mat, Matrix *b) {
 		}
 	}
 
-<<<<<<< HEAD
 	return 0;
-=======
-	/* Sprawdzenie ostatnich elementow diagonalnych */
-	for (int k = 0; k < rows && k < cols; ++k) {
-		if (mat->data[k][k] == 0.0) {
-			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
-			return 1; /* Macierz osobliwa */
-		}
-	}
-
-	return 0; /* Eliminacja zakonczonaa sukcesem */
->>>>>>> diag_elem1
 }
