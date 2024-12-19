@@ -7,14 +7,35 @@
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
  */
 int eliminate(Matrix *mat, Matrix *b) {
-	int rows = mat->r; /* Liczba wierszy macierzy */
-	int cols = mat->c; /* Liczba kolumn macierzy */
+	/* Liczba wierszy i kolumn macierzy */
+	int rows = mat->r;
+	int cols = mat->c;
 
 	for (int k = 0; k < rows && k < cols; ++k) {
+		/* Znalezienie wiersza z najwiekszym elementem w kolumnie k (pivoting) */
+		int max_row = k;
+		for (int i = k + 1; i < rows; ++i) {
+			if (fabs(mat->data[i][k]) > fabs(mat->data[max_row][k])) {
+				max_row = i;
+			}
+		}
+
+		/* Zamiana wierszy (pivot) */
+		if (max_row != k) {
+			double *temp_row = mat->data[k];
+			mat->data[k] = mat->data[max_row];
+			mat->data[max_row] = temp_row;
+
+			/* Zamiana odpowiednich wartosci w wektorze b */
+			double temp_b = b->data[k][0];
+			b->data[k][0] = b->data[max_row][0];
+			b->data[max_row][0] = temp_b;
+		}
+
 		/* Sprawdzenie, czy element diagonalny jest rowny 0 */
 		if (mat->data[k][k] == 0.0) {
-			fprintf(stderr, "Macierz osobliwa lub brak mozliwosci eliminacji w wierszu %d.\n", k);
-			return 1; /* Macierz osobliwa */
+			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
+			return 1;
 		}
 
 		/* Eliminacja wierszy ponizej wiersza k */
@@ -26,20 +47,10 @@ int eliminate(Matrix *mat, Matrix *b) {
 				mat->data[i][j] -= factor * mat->data[k][j];
 			}
 
-			/* Aktualizacja wektora b, jesli liczba kolumn w b to 1 */
-			if (b->c == 1) {
-				b->data[i][0] -= factor * b->data[k][0];
-			}
+			/* Aktualizacja wektora b */
+			b->data[i][0] -= factor * b->data[k][0];
 		}
 	}
 
-	/* Sprawdzenie ostatnich elementow diagonalnych */
-	for (int k = 0; k < rows && k < cols; ++k) {
-		if (mat->data[k][k] == 0.0) {
-			fprintf(stderr, "Macierz osobliwa: dzielenie przez zero w wierszu %d.\n", k);
-			return 1; /* Macierz osobliwa */
-		}
-	}
-
-	return 0; /* Eliminacja zakonczona sukcesem */
+	return 0;
 }
